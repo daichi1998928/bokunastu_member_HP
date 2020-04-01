@@ -1,0 +1,82 @@
+<h2>User info</h2>
+
+<%= form_for(@user) do |f| %>
+<%= render 'layouts/errors', obj: @user %>
+
+<div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name, class: "name" %>
+</div>
+
+<div class="field">
+    <%= f.label :ニックネーム %>
+    <%= f.text_field :nickname, class: "name" %>
+</div>
+
+<div class="field">
+    <%= f.label :学部学科 %>
+    <%= f.text_field :faculty, class: "name" %>
+</div>
+
+<div class="field">
+    <%= f.label :image %>
+    <%= f.attachment_field :profile_image, class: "user_image" %>
+</div>
+
+ <div class="field">
+    <%= f.label :title_of_branch %><br />
+    <%= f.number_field :title_of_branch_id, autofocus: true, class: "email" %>
+  </div>
+
+<div class="field">
+    <%= f.label :introduction %>
+    <%= f.text_area :introduction, class: "introduction" %>
+</div>
+
+<div class="field">
+    <%= f.label :ビジョン %>
+    <%= f.text_area :vision, class: "introduction" %>
+</div>
+
+<div class="field">
+    <%= f.label :ミッション %>
+    <%= f.text_area :mission, class: "introduction" %>
+</div>
+
+<div class="field">
+    <%= f.label :出生地 %>
+    <%= f.text_area :birthplace, class: "introduction" %>
+</div>
+
+
+
+<div class="field">
+    <%= f.label :将来の夢 %>
+    <%= f.text_area :dream, class: "introduction" %>
+</div>
+
+<div class="field">
+    <%= f.label :活動目的 %>
+    <%= f.text_area :objective, class: "introduction" %>
+</div>
+
+<div class="field">
+    <%= f.label :入会のきっかけ %>
+    <%= f.text_area :back_ground, class: "introduction" %>
+</div>
+
+<div class="field">
+    <%= f.label :活動で印象に残ってるエピソード %>
+    <%= f.text_area :episode, class: "introduction" %>
+</div>
+
+<div class="field">
+    <%= f.label :活動を経ての心境の変化 %>
+    <%= f.text_area :changing, class: "introduction" %>
+</div>
+
+
+<div class="actions">
+    <%= f.submit %>
+</div>
+<% end %>

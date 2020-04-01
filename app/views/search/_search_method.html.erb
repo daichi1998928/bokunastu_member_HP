@@ -1,0 +1,29 @@
+ <% relation = Character.joins(:anime)
+    relation.merge(Anime.where(title: '刀語')).or(relation.where(sex: :male))   %>
+
+    <% User.joins(:skills,:hobbies,:challengings).where('name LIKE(?) OR vision LIKE(?) OR birthplace LIKE(?) ', "%大%", "%まだ%", "%群馬%" ).first %>
+    <%  User.wheer('name LIKE(?) OR vision LIKE(?) OR birthplace LIKE(?) ', "%大%", "%まだ%", "%群馬%")%>
+    <% User.joins(:skills,:hobbies,:challengings).where('name LIKE(?) OR vision LIKE(?) OR birthplace LIKE(?) ', "%大%", "%まだ%", "%群馬%" ).or %>
+
+
+  <% relation = User.joins(:skills,:hobbies,:challengings) %>
+  <% relation.merge(Skill.where("content LIKE(?)", "料理")).or(merge(Hobby.where("content LIKE(?)", "料理")).or(merge(Challenging.where("content LIKE(?)", "料理"))).or(relation.where('name LIKE(?) OR vision LIKE(?) OR birthplace LIKE(?) ', "%料理%", "%料理%", "%料理%")) %>
+
+  <% relation.merge(Skill.where("content LIKE(?)", "料理")).or(merge(Hobby.where("content LIKE(?)", "料理")).or(merge(Challenging.where("content LIKE(?)", "料理"))).or(relation.where('name LIKE(?) OR vision LIKE(?) OR birthplace LIKE(?) ', "%料理%", "%料理%", "%料理%")) %>
+  <% relation.merge(Skill.where("content LIKE(?)", "料理").or(Hobby.where("content LIKE(?)", "料理")).or(Challenging.where("content LIKE(?)", "料理"))).or(relation.where('name LIKE(?) OR vision LIKE(?) OR birthplace LIKE(?) ', "%料理%", "%料理%", "%料理%")) %>
+
+<%# ここから1 %>
+  <% member = [] %>
+  <% a = User.joins(:skills) %>
+  <% a.merge(Skill.where("content LIKE(?)", "ソロバン")).or(a.where('name LIKE(?) OR vision LIKE(?) OR birthplace LIKE(?) ', "%ソロバン%", "%ソロバン%", "%ソロバン%")) %>
+  <%# ここまで %>
+  
+<%# ここから2 %>
+<% member = [] %>
+<% Skill.where("content LIKE(?)", "%漫画%").or(Hobby.where("content LIKE(?)", "%漫画%")).each do |f| %>
+<% member << f.user %>
+<% end %>
+
+  <% Model.where(A)
+     .merge(Model.where(B).or(Model.where(C)).or(Model.where(D)))
+     .merge(Model.where(E).or(Model.where(F))) %>
