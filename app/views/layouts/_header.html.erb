@@ -37,11 +37,12 @@
 
    <div class="search-form" style="margin-top: 70px; text-align: center;">
     <%= form_tag(search_path,local: true, method: :get) do  %>
-      <%= select_tag 'narrow[university_branch]', options_for_select( UniversityBranch.all.map{|branch| [branch.name]}), id: 'university_branch', include_blank: true  %>
-      <%= select_tag 'narrow[assigned_school]', options_for_select( AssignedSchool.all.map{|school| [school.name]}), id: 'assigned_school', include_blank: true  %>
-      <%= select_tag 'narrow[title_of_branch]', options_for_select( TitleOfBranch.all.map{|title| [title.name]}), id: 'title_of_branch', include_blank: true  %>
+      <%= select_tag 'narrow_university_branch', options_for_select( UniversityBranch.all.map{|branch| [branch.name]}), id: 'university_branch', include_blank: true  %>
+      <%= select_tag 'narrow_assigned_school', options_for_select( AssignedSchool.all.map{|school| [school.name]}), id: 'assigned_school', include_blank: true  %>
+      <%= select_tag 'narrow_title_of_branch', options_for_select( TitleOfBranch.all.map{|title| [title.name]}), id: 'title_of_branch', include_blank: true  %>
       <%= submit_tag "絞り込む" %>
     <% end %>
+    <p>＊支部と交流小学校の両方は選択できません！</p>
   </div>
 
 <% end %>
