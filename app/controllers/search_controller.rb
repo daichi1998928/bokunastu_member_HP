@@ -2,12 +2,34 @@ class SearchController < ApplicationController
   before_action :authenticate_user!
 
   def search
-    binding.pry
+   if params[:narrow_university_branch].present?
+      name = params[:narrow_university_branch]
+      university_branch = UniversityBranch.find_by(name: "#{name}")
+      @members = university_branch.users
+        if params[:narrow_title_of_branch].present?
+          title_of_branch_name = params[:narrow_title_of_branch]
+          title_of_branch_id = TitleOfBranch.find_by(name: title_of_branch_name).id
+          @members = @members.where(title_of_branch_id: title_of_branch_id)
+        end
+   elsif params[:narrow_assigned_school].present?
+    name = params[:narrow_assigned_school]
+    school = AssignedSchool.find_by(name: "#{name}")
+    @members = school.users
+      if params[:narrow_title_of_branch].present?
+        title_of_branch_name = params[:narrow_title_of_branch]
+        title_of_branch_id = TitleOfBranch.find_by(name: title_of_branch_name).id
+        @members = @members.where(title_of_branch_id: title_of_branch_id)
+      end
+    elsif params[:narrow_title_of_branch].present?
+      name = params[:narrow_title_of_branch]
+      title = TitleOfBranch.find_by(name: name)
+      @members = title.users
+    end
     # @model = params["search"]["model"]
-    @content = params["search"]["keyword"]
+    # @content = params["search"]["keyword"]
 
-    # @users = search_by_model(@model, @content)
-    @users = search_for(@content)
+    # # @users = search_by_model(@model, @content)
+    # @users = search_for(@content)
   end
 
   private
