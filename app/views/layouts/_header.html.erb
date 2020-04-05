@@ -23,20 +23,14 @@
 <% if user_signed_in? %>
   <div class="search-form" style="margin-top: 70px; text-align: center;">
     <%= form_tag(search_path,local: true, method: :get) do  %>
-      <%= select_tag 'search[model]', options_for_select({ "特技" => "skill", "趣味" => "hobby","これから挑戦したいこと" => "challenging" }) %>
-      <%= text_field_tag "seach[keyword]", "",placeholder: "特技、趣味が同じメンバーを探そう",size:50 %>
-      <%= submit_tag "検索" %>
-    <% end %>
-    
-
-    <%= form_tag(search_path,local: true, method: :get) do  %>
-      <%= text_field_tag "search[keyword]", "",placeholder: "特技、趣味が同じメンバーを探そう",size:50 %>
+      <%= select_tag 'search[model]', options_for_select(["趣味","挑戦したいこと","故郷","興味","名前orニックネーム","学部学科"]) %>
+      <%= text_field_tag "search[keyword]", "",placeholder: "知りたいことを入力してね！",size:50 %>
       <%= submit_tag "検索" %>
     <% end %>
   </div>
 
    <div class="search-form" style="margin-top: 70px; text-align: center;">
-    <%= form_tag(search_path,local: true, method: :get) do  %>
+    <%= form_tag(search_by_narrow_path,local: true, method: :get) do  %>
       <%= select_tag 'narrow_university_branch', options_for_select( UniversityBranch.all.map{|branch| [branch.name]}), id: 'university_branch', include_blank: true  %>
       <%= select_tag 'narrow_assigned_school', options_for_select( AssignedSchool.all.map{|school| [school.name]}), id: 'assigned_school', include_blank: true  %>
       <%= select_tag 'narrow_title_of_branch', options_for_select( ["支部長","小学校担当"]), id: 'title_of_branch', include_blank: true  %>

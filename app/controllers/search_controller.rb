@@ -1,8 +1,8 @@
 class SearchController < ApplicationController
   before_action :authenticate_user!
 
-  def search
-   if params[:narrow_university_branch].present?
+  def search_narrow
+    if params[:narrow_university_branch].present?
       name = params[:narrow_university_branch]
       university_branch = UniversityBranch.find_by(name: "#{name}")
       @members = university_branch.users
@@ -25,46 +25,48 @@ class SearchController < ApplicationController
       title = TitleOfBranch.find_by(name: name)
       @members = title.users
     end
-    # @model = params["search"]["model"]
-    # @content = params["search"]["keyword"]
 
-    # # @users = search_by_model(@model, @content)
-    # @users = search_for(@content)
+    render :search
   end
+  
 
-  private
-  def search_by_model(model, content)
-    members = []
-    if model = "skill"
-      Skill.where("content LIKE(?)", "%#{content}%").each do |f|
-        members << f.user
+  def search   
+    if params["search"]["model"].present?
+      search_object = params["search"]["model"]
+      keyword = params["search"]["keyword"]
+      members = []
+      if search_object == "趣味"
+        Hobby.where("content LIKE(?)", "%#{keyword}%").each do |f|
+          members << f.user
+        end
+        @members = members.uniq
+        return @members
+      elsif search_object == '挑戦したいこと'
+        Challenging.where("content LIKE(?)", "%#{keyword}%").each do |f|
+          members << f.user
+        end
+        @members = members.uniq
+        return @members
+      elsif search_object == "故郷"
+        @members = User.where("birthplace LIKE(?)", "%#{keyword}%")
+        return @members
+      elsif search_object == "興味"
+        Interest.where("content LIKE(?)", "%#{keyword}%").each do |f|
+          members << f.user
+        end
+        @members = members.uniq
+        return @members      
+      elsif search_object == "名前orニックネーム"
+        @members = User.where("name LIKE(?)", "%#{keyword}%").or(User.where("nickname LIKE(?)", "%#{keyword}%"))
+        return @members
+      elsif search_object == "学部学科"
+        @members = User.where("faculty LIKE(?)", "%#{keyword}%")
+        return @members
       end
-      members = members.uniq
-      binding.pry
-      return members
-    elsif model = 'hobby'
-      Hobby.where("content LIKE(?)", "%#{content}%").each do |f|
-        members << f.user
-      end
-      members.uniq
-      return members
-    elsif model = "challenging"
-      Challenging.where("content LIKE(?)", "%#{content}%").each do |f|
-        members << f.user
-      end
-      members.uniq
-      return members
     end
   end
 
-  def search_for(content)
-    users = []
-    test = Skill.where("content LIKE(?)", "%#{content}%").or(Hobby.where("content LIKE(?)", "%#{content}%")).or(Challenging.where("content LIKE(?)", "%#{content}%"))
-    test.each do |f| 
-       users << f.user 
-    end
-     users = users.uniq
-     return users
-  end
+  
+  
   
 end

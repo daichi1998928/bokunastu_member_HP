@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   root 'home#top'
   get 'home/about'
 
-  get '/search', to: 'search#search'
-
+  get '/search_by_narrow', to: 'search#search_narrow'
+  get '/search', to: "search#search"
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
